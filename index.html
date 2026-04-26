@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -53,7 +54,9 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+
     <style>
+      /* ── BASE ── */
       * {
         scroll-behavior: smooth;
       }
@@ -61,6 +64,9 @@
         font-family: 'DM Sans', sans-serif;
         background: #fff;
         color: #0b1437;
+        transition:
+          background 0.3s ease,
+          color 0.3s ease;
       }
       h1,
       h2,
@@ -70,7 +76,62 @@
         font-family: 'Syne', sans-serif;
       }
 
-      /* NAV */
+      /* ══════════ DARK MODE OVERRIDES ══════════ */
+      html.dark body {
+        background: #080e24;
+        color: #e2e8f0;
+      }
+
+      /* Header */
+      html.dark #header {
+        background: rgba(8, 14, 36, 0.92) !important;
+        border-bottom-color: #1e293b !important;
+      }
+
+      /* Hero pattern */
+      html.dark .hero-pattern {
+        background-color: #080e24;
+        background-image: radial-gradient(#2563eb25 1.5px, transparent 1.5px);
+      }
+
+      /* Blob */
+      html.dark .blob {
+        background: linear-gradient(135deg, #2563eb33, #7c3aed33) !important;
+      }
+
+      /* Cards */
+      html.dark .card-hover:hover {
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.18);
+      }
+
+      /* skill tags */
+      html.dark .skill-tag {
+        border-color: #1e293b;
+        color: #cbd5e1;
+        background: transparent;
+      }
+      html.dark .skill-tag:hover {
+        border-color: #2563eb;
+        background: #0b1437;
+        color: #60a5fa;
+      }
+
+      /* Section divider unchanged */
+
+      /* Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Nav link */
       .nav-link {
         position: relative;
       }
@@ -87,33 +148,34 @@
       .nav-link:hover::after {
         width: 100%;
       }
-
-      /* HERO BG PATTERN */
-      .hero-pattern {
-        background-color: #fff;
-        background-image: radial-gradient(#2563eb15 1.5px, transparent 1.5px);
-        background-size: 28px 28px;
+      html.dark .nav-link {
+        color: #94a3b8;
+      }
+      html.dark .nav-link:hover {
+        color: #e2e8f0;
       }
 
-      /* BLOB */
-      .blob {
-        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-        animation: morphBlob 8s ease-in-out infinite;
-      }
-      @keyframes morphBlob {
-        0%,
-        100% {
-          border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-        }
-        33% {
-          border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%;
-        }
-        66% {
-          border-radius: 55% 45% 60% 40% / 40% 55% 45% 60%;
-        }
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
-      /* TYPING */
+      /* Patent badge */
+      .patent-badge {
+        background: linear-gradient(135deg, #f59e0b22, #f59e0b11);
+        border: 1.5px solid #f59e0b55;
+        color: #b45309;
+      }
+      html.dark .patent-badge {
+        background: linear-gradient(135deg, #f59e0b18, #f59e0b0a);
+        color: #fcd34d;
+        border-color: #f59e0b44;
+      }
+
+      /* Typed cursor */
       .typed-cursor {
         display: inline-block;
         width: 3px;
@@ -133,76 +195,117 @@
         }
       }
 
-      /* CARDS */
-      .card-hover {
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+      /* Float img */
+      @keyframes floatImg {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
       }
 
-      /* SKILL TAGS */
-      .skill-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 16px;
-        border-radius: 100px;
-        font-size: 0.85rem;
-        font-weight: 500;
+      /* Blob morph */
+      .blob {
+        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+        animation: morphBlob 8s ease-in-out infinite;
+      }
+      @keyframes morphBlob {
+        0%,
+        100% {
+          border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+        }
+        33% {
+          border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%;
+        }
+        66% {
+          border-radius: 55% 45% 60% 40% / 40% 55% 45% 60%;
+        }
+      }
+
+      /* About info cards */
+      .info-card {
+        background: #f8fafc;
         border: 1.5px solid #e2e8f0;
-        transition: all 0.25s ease;
-        cursor: default;
-      }
-      .skill-tag:hover {
-        border-color: #2563eb;
-        background: #eff6ff;
-        color: #2563eb;
-        transform: translateY(-2px);
-      }
-
-      /* SECTION REVEAL */
-      .reveal {
-        opacity: 0;
-        transform: translateY(40px);
         transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
+          background 0.3s,
+          border-color 0.3s;
       }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
+      html.dark .info-card {
+        background: #0f172a;
+        border-color: #1e293b;
       }
-
-      /* GRADIENT TEXT */
-      .gradient-text {
-        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      html.dark .info-card p,
+      html.dark .info-card span {
+        color: #94a3b8;
       }
-
-      /* PROJECT IMAGE PLACEHOLDER */
-      .img-placeholder {
-        background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #93c5fd;
-        font-size: 2.5rem;
+      html.dark .info-card .font-semibold {
+        color: #e2e8f0;
       }
 
-      /* PATENT BADGE */
-      .patent-badge {
-        background: linear-gradient(135deg, #f59e0b22, #f59e0b11);
-        border: 1.5px solid #f59e0b55;
-        color: #b45309;
+      /* About dark card */
+      .dark-card {
+        background: linear-gradient(135deg, #0b1437, #1e3a8a);
+        border: 1.5px solid #1e3a8a;
+      }
+      html.dark .dark-card {
+        background: linear-gradient(135deg, #060b1e, #0f1f4a);
+        border-color: #1e293b;
       }
 
-      /* CONTACT INPUT */
+      /* Section bg */
+      html.dark .section-alt {
+        background: #0d1530 !important;
+      }
+      html.dark .section-white {
+        background: #080e24 !important;
+      }
+
+      /* Project cards */
+      .project-card {
+        background: #fff;
+        border: 1.5px solid #e2e8f0;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+      }
+      html.dark .project-card {
+        background: #0f172a;
+        border-color: #1e293b;
+      }
+      html.dark .project-card p {
+        color: #94a3b8;
+      }
+      html.dark .project-card h3 {
+        color: #e2e8f0;
+      }
+
+      /* Patent card */
+      html.dark .patent-card {
+        background: linear-gradient(135deg, #1c1205, #2d1e07) !important;
+        border-color: #78350f44 !important;
+      }
+      html.dark .patent-card h3 {
+        color: #fde68a;
+      }
+      html.dark .patent-card p {
+        color: #d97706;
+      }
+      html.dark .patent-card .border-t {
+        border-color: #78350f55;
+      }
+
+      /* Skill cards */
+      html.dark .skill-card {
+        background: #0f172a;
+        border-color: #1e293b;
+      }
+      html.dark .skill-card h3 {
+        color: #e2e8f0;
+      }
+
+      /* Contact form */
       .contact-input {
         width: 100%;
         padding: 12px 16px;
@@ -215,13 +318,45 @@
           border-color 0.2s ease,
           background 0.2s ease;
         outline: none;
+        color: #0b1437;
       }
       .contact-input:focus {
         border-color: #2563eb;
         background: #fff;
       }
+      html.dark .contact-input {
+        background: #0f172a;
+        border-color: #1e293b;
+        color: #e2e8f0;
+      }
+      html.dark .contact-input:focus {
+        background: #0b1437;
+        border-color: #2563eb;
+      }
+      html.dark .contact-input::placeholder {
+        color: #475569;
+      }
 
-      /* SOCIAL HOVER */
+      /* Contact info cards */
+      html.dark .contact-card {
+        background: #0f172a;
+        border-color: #1e293b;
+      }
+      html.dark .contact-card p {
+        color: #94a3b8;
+      }
+      html.dark .contact-form-box {
+        background: #0f172a;
+        border-color: #1e293b;
+      }
+      html.dark .contact-form-box h3 {
+        color: #e2e8f0;
+      }
+      html.dark .contact-form-box label {
+        color: #94a3b8;
+      }
+
+      /* Social btns */
       .social-btn {
         width: 40px;
         height: 40px;
@@ -241,18 +376,75 @@
         color: #fff;
         transform: translateY(-3px);
       }
-
-      /* TIMELINE DOT */
-      .tl-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
+      html.dark .social-btn {
+        border-color: #1e293b;
+        color: #94a3b8;
+      }
+      html.dark .social-btn:hover {
         background: #2563eb;
-        flex-shrink: 0;
-        margin-top: 5px;
+        border-color: #2563eb;
+        color: #fff;
       }
 
-      /* BACK TO TOP */
+      /* Stats */
+      html.dark .stat-card {
+        background: #0f172a !important;
+        border-color: #1e293b !important;
+      }
+      html.dark .stat-card p {
+        color: #94a3b8;
+      }
+      html.dark .stat-card .text-navy {
+        color: #e2e8f0 !important;
+      }
+
+      /* Section divider */
+      .section-divider {
+        width: 48px;
+        height: 4px;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #2563eb, #7c3aed);
+        margin: 12px 0 20px 0;
+      }
+
+      /* img placeholder */
+      .img-placeholder {
+        background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #93c5fd;
+        font-size: 2.5rem;
+      }
+      html.dark .img-placeholder {
+        background: linear-gradient(135deg, #0b1437 0%, #0f172a 100%);
+      }
+
+      /* CTA Banner */
+      html.dark .cta-banner {
+        background: linear-gradient(
+          135deg,
+          #050b20 0%,
+          #0d1f4a 100%
+        ) !important;
+      }
+
+      /* Footer */
+      html.dark footer {
+        background: #040913 !important;
+      }
+
+      /* Hire me btn */
+      html.dark .hire-btn {
+        background: #e2e8f0;
+        color: #0b1437;
+      }
+      html.dark .hire-btn:hover {
+        background: #2563eb;
+        color: #fff;
+      }
+
+      /* Back to top */
       #back-top {
         position: fixed;
         bottom: 24px;
@@ -281,17 +473,11 @@
       #back-top:hover {
         transform: translateY(-4px);
       }
-
-      /* DIVIDER */
-      .section-divider {
-        width: 48px;
-        height: 4px;
-        border-radius: 99px;
-        background: linear-gradient(90deg, #2563eb, #7c3aed);
-        margin: 12px 0 20px 0;
+      html.dark #back-top {
+        background: #1e293b;
       }
 
-      /* MOBILE MENU */
+      /* Mobile menu */
       #mobile-menu {
         position: fixed;
         inset: 0;
@@ -313,6 +499,105 @@
         font-weight: 700;
         text-decoration: none;
       }
+
+      /* Dark toggle btn */
+      #theme-toggle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid #e2e8f0;
+        color: #475569;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-size: 1rem;
+      }
+      #theme-toggle:hover {
+        background: #2563eb;
+        border-color: #2563eb;
+        color: #fff;
+      }
+      html.dark #theme-toggle {
+        border-color: #1e293b;
+        color: #94a3b8;
+      }
+      html.dark #theme-toggle:hover {
+        background: #2563eb;
+        border-color: #2563eb;
+        color: #fff;
+      }
+
+      /* Tag chips in dark */
+      html.dark .tag-chip {
+        background: #1e293b !important;
+        color: #94a3b8 !important;
+      }
+
+      /* Floating badge */
+      html.dark .float-badge {
+        background: #0f172a !important;
+        border-color: #1e293b !important;
+      }
+      html.dark .float-badge p {
+        color: #94a3b8;
+      }
+      html.dark .float-badge .text-navy {
+        color: #e2e8f0 !important;
+      }
+
+      /* Badge icon bg */
+      html.dark .badge-icon-blue {
+        background: #0b1437 !important;
+      }
+      html.dark .badge-icon-yellow {
+        background: #2d1e07 !important;
+      }
+
+      /* Text overrides */
+      html.dark .text-navy {
+        color: #e2e8f0 !important;
+      }
+      html.dark .text-slate-600 {
+        color: #94a3b8 !important;
+      }
+      html.dark .text-slate-500 {
+        color: #64748b !important;
+      }
+      html.dark .text-slate-700 {
+        color: #94a3b8 !important;
+      }
+      html.dark .text-slate-400 {
+        color: #475569 !important;
+      }
+      html.dark h2.text-navy {
+        color: #e2e8f0 !important;
+      }
+
+      /* Hire me nav button */
+      html.dark a.bg-navy {
+        background: #1e293b !important;
+      }
+      html.dark a.bg-navy:hover {
+        background: #2563eb !important;
+      }
+
+      /* Hero border btns */
+      html.dark .hero-outline-btn {
+        border-color: #e2e8f0 !important;
+        color: #e2e8f0 !important;
+      }
+      html.dark .hero-outline-btn:hover {
+        background: #e2e8f0 !important;
+        color: #0b1437 !important;
+      }
+
+      /* Placeholder icon card */
+      html.dark .icon-card-purple {
+        background: linear-gradient(135deg, #1a0b2e, #1f0f3a) !important;
+      }
     </style>
   </head>
   <body>
@@ -329,47 +614,58 @@
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center"
       >
-        <a
-          href="#home"
-          class="font-display font-800 text-xl tracking-tight"
-          style="font-weight: 800"
-        >
-          <span class="gradient-text">Bhushan</span
-          ><span class="text-navy">.</span>
+        <a href="#home" style="font-weight: 800" class="text-xl tracking-tight">
+          <span class="gradient-text" style="font-family: 'Syne', sans-serif"
+            >Bhushan</span
+          ><span class="text-navy" style="font-family: 'Syne', sans-serif"
+            >.</span
+          >
         </a>
-        <nav class="hidden md:flex items-center gap-8">
+        <nav class="hidden md:flex items-center gap-6">
           <a
             href="#about"
-            class="nav-link text-slate-600 font-medium text-sm hover:text-navy transition-colors"
+            class="nav-link font-medium text-sm transition-colors"
             >About</a
           >
           <a
             href="#projects"
-            class="nav-link text-slate-600 font-medium text-sm hover:text-navy transition-colors"
+            class="nav-link font-medium text-sm transition-colors"
             >Projects</a
           >
           <a
             href="#skills"
-            class="nav-link text-slate-600 font-medium text-sm hover:text-navy transition-colors"
+            class="nav-link font-medium text-sm transition-colors"
             >Skills</a
           >
           <a
             href="#contact"
-            class="nav-link text-slate-600 font-medium text-sm hover:text-navy transition-colors"
+            class="nav-link font-medium text-sm transition-colors"
             >Contact</a
           >
           <a
             href="#contact"
-            class="bg-navy text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-accent transition-colors"
+            class="hire-btn bg-navy text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-accent transition-colors"
             >Hire Me →</a
           >
+          <!-- DARK MODE TOGGLE -->
+          <button id="theme-toggle" title="Toggle dark mode">
+            <i id="theme-icon" class="ri-moon-line"></i>
+          </button>
         </nav>
-        <button
-          id="menu-btn"
-          class="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-700"
-        >
-          <i class="ri-menu-3-line text-xl"></i>
-        </button>
+        <div class="flex items-center gap-2 md:hidden">
+          <button
+            id="theme-toggle-mob"
+            class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500"
+          >
+            <i id="theme-icon-mob" class="ri-moon-line"></i>
+          </button>
+          <button
+            id="menu-btn"
+            class="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-700"
+          >
+            <i class="ri-menu-3-line text-xl"></i>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -406,8 +702,12 @@
               University
             </div>
             <h1
-              class="text-4xl md:text-6xl font-display font-800 leading-tight mb-4"
-              style="font-weight: 800; line-height: 1.1"
+              class="text-4xl md:text-6xl leading-tight mb-4"
+              style="
+                font-family: 'Syne', sans-serif;
+                font-weight: 800;
+                line-height: 1.1;
+              "
             >
               Hey, I'm<br />
               <span class="gradient-text">Bhushan Dhake</span>
@@ -415,8 +715,8 @@
 
             <p class="text-slate-500 leading-relaxed mb-8 mt-4">
               Cybersecurity enthusiast blending logic with creativity — crafting
-              IoT devices, diving deep into Python & C++, and building things
-              that spark imagination.
+              IoT devices, diving deep into Python &amp; C++, and building
+              things that spark imagination.
             </p>
             <div class="flex flex-wrap gap-3 mb-8">
               <a
@@ -427,7 +727,7 @@
               </a>
               <a
                 href="#contact"
-                class="inline-flex items-center gap-2 border-2 border-navy text-navy px-6 py-3 rounded-full font-medium hover:bg-navy hover:text-white transition-all"
+                class="hero-outline-btn inline-flex items-center gap-2 border-2 border-navy text-navy px-6 py-3 rounded-full font-medium hover:bg-navy hover:text-white transition-all"
               >
                 <i class="ri-mail-line"></i> Contact Me
               </a>
@@ -461,7 +761,6 @@
             style="animation: fadeIn 1s ease both"
           >
             <div class="relative" style="position: relative">
-              <!-- Blob background -->
               <div
                 class="blob absolute inset-0 scale-110"
                 style="
@@ -469,7 +768,6 @@
                   z-index: 0;
                 "
               ></div>
-              <!-- Profile image -->
               <div
                 class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
                 style="
@@ -488,7 +786,6 @@
                     this.nextElementSibling.style.display = 'flex';
                   "
                 />
-                <!-- Fallback placeholder -->
                 <div
                   style="
                     display: none;
@@ -510,22 +807,24 @@
                   >
                 </div>
               </div>
-              <!-- Floating badges -->
+              <!-- Floating badge bottom left -->
               <div
-                class="absolute -bottom-4 -left-4 z-20 bg-white rounded-2xl shadow-lg px-4 py-2 flex items-center gap-2 border border-slate-100"
+                class="float-badge absolute -bottom-4 -left-4 z-20 bg-white rounded-2xl shadow-lg px-4 py-2 flex items-center gap-2 border border-slate-100"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex items-center justify-center"
+                  class="badge-icon-blue w-8 h-8 rounded-full flex items-center justify-center"
                   style="background: #eff6ff"
                 >
-                  <i class="ri-shield-check-line text-accent"></i>
+                  <i class="ri-shield-check-line" style="color: #2563eb"></i>
                 </div>
                 <div>
                   <p class="text-xs text-slate-400">Specialization</p>
                   <p class="text-xs font-semibold text-navy">Cyber Security</p>
                 </div>
               </div>
+              <!-- Floating badge top right -->
               <div
+                class="float-badge"
                 style="
                   position: absolute;
                   top: -14px;
@@ -542,6 +841,7 @@
                 "
               >
                 <div
+                  class="badge-icon-yellow"
                   style="
                     width: 30px;
                     height: 30px;
@@ -558,34 +858,71 @@
                     style="color: #f59e0b; font-size: 0.9rem"
                   ></i>
                 </div>
+                <div>
+                  <p
+                    style="
+                      font-size: 0.65rem;
+                      color: #94a3b8;
+                      margin: 0;
+                      line-height: 1.2;
+                    "
+                  >
+                    Patent Holder
+                  </p>
+                  <p
+                    style="
+                      font-size: 0.7rem;
+                      font-weight: 700;
+                      color: #0b1437;
+                      margin: 0;
+                      font-family: Syne, sans-serif;
+                    "
+                    class="text-navy"
+                  >
+                    Inventor
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Stats row -->
-        <div
-          class="grid grid-cols-3 md:grid-cols-3 gap-4 mt-16 max-w-xl reveal"
-        >
+        <div class="grid grid-cols-3 gap-4 mt-16 max-w-xl reveal">
           <div
-            class="text-center p-4 rounded-2xl"
+            class="stat-card text-center p-4 rounded-2xl"
             style="background: #f8fafc; border: 1.5px solid #e2e8f0"
           >
-            <p class="text-2xl font-display font-bold text-navy">1</p>
+            <p
+              class="text-2xl font-bold text-navy"
+              style="font-family: 'Syne', sans-serif"
+            >
+              1
+            </p>
             <p class="text-xs text-slate-500 mt-1">Patent Filed</p>
           </div>
           <div
-            class="text-center p-4 rounded-2xl"
+            class="stat-card text-center p-4 rounded-2xl"
             style="background: #f8fafc; border: 1.5px solid #e2e8f0"
           >
-            <p class="text-2xl font-display font-bold text-navy">5+</p>
+            <p
+              class="text-2xl font-bold text-navy"
+              style="font-family: 'Syne', sans-serif"
+            >
+              5+
+            </p>
             <p class="text-xs text-slate-500 mt-1">IoT Projects</p>
           </div>
           <div
-            class="text-center p-4 rounded-2xl"
+            class="stat-card text-center p-4 rounded-2xl"
             style="background: #f8fafc; border: 1.5px solid #e2e8f0"
           >
-            <p class="text-2xl font-display font-bold text-navy">2028</p>
+            <p
+              class="text-2xl font-bold text-navy"
+              style="font-family: 'Syne', sans-serif"
+            >
+              2028
+            </p>
             <p class="text-xs text-slate-500 mt-1">Graduating</p>
           </div>
         </div>
@@ -593,21 +930,23 @@
     </section>
 
     <!-- ══════════════════════════════ ABOUT ══════════════════════════════ -->
-    <section id="about" class="py-24 bg-white">
+    <section id="about" class="section-white py-24 bg-white">
       <div class="max-w-6xl mx-auto px-6">
         <div class="flex flex-col md:flex-row gap-16 items-center">
           <!-- Info grid -->
           <div class="w-full md:w-2/5 reveal">
             <div class="grid grid-cols-2 gap-4">
               <div
-                class="col-span-2 rounded-2xl p-6 flex items-center gap-4 card-hover"
-                style="background: #f8fafc; border: 1.5px solid #e2e8f0"
+                class="info-card col-span-2 rounded-2xl p-6 flex items-center gap-4 card-hover"
               >
                 <div
-                  class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  class="badge-icon-blue w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                   style="background: #eff6ff"
                 >
-                  <i class="ri-graduation-cap-line text-accent text-xl"></i>
+                  <i
+                    class="ri-graduation-cap-line text-xl"
+                    style="color: #2563eb"
+                  ></i>
                 </div>
                 <div>
                   <p class="text-xs text-slate-400 uppercase tracking-wider">
@@ -622,11 +961,10 @@
                 </div>
               </div>
               <div
-                class="rounded-2xl p-5 flex flex-col gap-2 card-hover"
-                style="background: #f8fafc; border: 1.5px solid #e2e8f0"
+                class="info-card rounded-2xl p-5 flex flex-col gap-2 card-hover"
               >
                 <div
-                  class="w-10 h-10 rounded-xl flex items-center justify-center"
+                  class="badge-icon-yellow w-10 h-10 rounded-xl flex items-center justify-center"
                   style="background: #fef3c7"
                 >
                   <i class="ri-map-pin-line" style="color: #f59e0b"></i>
@@ -638,8 +976,7 @@
                 <p class="text-slate-400 text-xs">India 🇮🇳</p>
               </div>
               <div
-                class="rounded-2xl p-5 flex flex-col gap-2 card-hover"
-                style="background: #f8fafc; border: 1.5px solid #e2e8f0"
+                class="info-card rounded-2xl p-5 flex flex-col gap-2 card-hover"
               >
                 <div
                   class="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -653,13 +990,7 @@
                 <p class="font-semibold text-navy text-sm">English</p>
                 <p class="text-slate-400 text-xs">Hindi</p>
               </div>
-              <div
-                class="col-span-2 rounded-2xl p-5 card-hover"
-                style="
-                  background: linear-gradient(135deg, #0b1437, #1e3a8a);
-                  border: 1.5px solid #1e3a8a;
-                "
-              >
+              <div class="dark-card col-span-2 rounded-2xl p-5 card-hover">
                 <p class="text-xs text-blue-300 uppercase tracking-wider mb-1">
                   Interests
                 </p>
@@ -693,12 +1024,17 @@
           <div class="w-full md:w-3/5 reveal">
             <span
               class="text-accent font-medium text-sm uppercase tracking-widest"
+              style="color: #2563eb"
               >About Me</span
             >
             <div class="section-divider"></div>
             <h2
-              class="text-3xl md:text-4xl font-display font-bold text-navy mb-6"
-              style="font-weight: 800; line-height: 1.2"
+              class="text-3xl md:text-4xl font-bold text-navy mb-6"
+              style="
+                font-family: 'Syne', sans-serif;
+                font-weight: 800;
+                line-height: 1.2;
+              "
             >
               Tech Enthusiast &<br />Creative Builder
             </h2>
@@ -736,17 +1072,22 @@
     </section>
 
     <!-- ══════════════════════════════ PROJECTS ══════════════════════════════ -->
-    <section id="projects" class="py-24" style="background: #f8fafc">
+    <section
+      id="projects"
+      class="section-alt py-24"
+      style="background: #f8fafc"
+    >
       <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-16 reveal">
           <span
-            class="text-accent font-medium text-sm uppercase tracking-widest"
+            class="font-medium text-sm uppercase tracking-widest"
+            style="color: #2563eb"
             >My Work</span
           >
           <div class="section-divider mx-auto"></div>
           <h2
-            class="text-3xl md:text-4xl font-display font-bold text-navy"
-            style="font-weight: 800"
+            class="text-3xl md:text-4xl font-bold text-navy"
+            style="font-family: 'Syne', sans-serif; font-weight: 800"
           >
             Featured Projects
           </h2>
@@ -756,10 +1097,10 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- PATENT CARD — Featured -->
+          <!-- PATENT CARD -->
           <div class="lg:col-span-2 reveal">
             <div
-              class="h-full rounded-3xl overflow-hidden border border-amber-200 card-hover shadow-sm"
+              class="patent-card h-full rounded-3xl overflow-hidden border border-amber-200 card-hover shadow-sm"
               style="background: linear-gradient(135deg, #fffbeb, #fef3c7)"
             >
               <div class="p-8 h-full flex flex-col justify-between">
@@ -777,13 +1118,12 @@
                     </span>
                     <span
                       class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200"
+                      >Innovation</span
                     >
-                      Innovation
-                    </span>
                   </div>
                   <h3
-                    class="text-xl md:text-2xl font-display font-bold text-navy mb-3"
-                    style="font-weight: 800"
+                    class="text-xl md:text-2xl font-bold text-navy mb-3"
+                    style="font-family: 'Syne', sans-serif; font-weight: 800"
                   >
                     Smart Emotion-Aware Clothing<br />for Mental Health
                     Monitoring
@@ -796,22 +1136,22 @@
                   </p>
                   <div class="flex flex-wrap gap-2">
                     <span
-                      class="text-xs px-3 py-1 rounded-full font-medium"
+                      class="tag-chip text-xs px-3 py-1 rounded-full font-medium"
                       style="background: #eff6ff; color: #1d4ed8"
                       >Wearable Electronics</span
                     >
                     <span
-                      class="text-xs px-3 py-1 rounded-full font-medium"
+                      class="tag-chip text-xs px-3 py-1 rounded-full font-medium"
                       style="background: #f0fdf4; color: #166534"
                       >Health Monitoring</span
                     >
                     <span
-                      class="text-xs px-3 py-1 rounded-full font-medium"
+                      class="tag-chip text-xs px-3 py-1 rounded-full font-medium"
                       style="background: #fdf4ff; color: #7e22ce"
                       >Smart Textiles</span
                     >
                     <span
-                      class="text-xs px-3 py-1 rounded-full font-medium"
+                      class="tag-chip text-xs px-3 py-1 rounded-full font-medium"
                       style="background: #fff7ed; color: #9a3412"
                       >Mental Health Tech</span
                     >
@@ -820,8 +1160,8 @@
                 <div
                   class="flex items-center gap-2 mt-6 pt-6 border-t border-amber-200"
                 >
-                  <i class="ri-lightbulb-flash-line text-amber-500"></i>
-                  <span class="text-sm text-amber-700 font-medium"
+                  <i class="ri-lightbulb-flash-line" style="color: #f59e0b"></i>
+                  <span class="text-sm font-medium" style="color: #b45309"
                     >Inventor: Bhushan Dhake</span
                   >
                 </div>
@@ -829,18 +1169,22 @@
             </div>
           </div>
 
-          <!-- IoT Robot Car 1 -->
+          <!-- IoT Robot Car -->
           <div class="reveal">
             <div
-              class="h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
+              class="project-card h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
             >
               <div class="h-52 overflow-hidden img-placeholder">
-                <!-- Replace with actual IoT project image -->
                 <img
                   src="./asssets/img1.png"
                   alt="IoT Robot Car"
                   class="w-full h-full object-cover"
                   style="object-fit: cover"
+                  onerror="
+                    this.style.display = 'none';
+                    this.parentElement.innerHTML =
+                      '<div style=\'display:flex;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF)\'><i class=\'ri-robot-2-line\' style=\'font-size:3rem;color:#93C5FD;\'></i><span style=\'color:#60A5FA;font-size:0.75rem;\'>IoT Robot Car</span></div>';
+                  "
                 />
               </div>
               <div class="p-6 flex flex-col flex-1">
@@ -853,8 +1197,8 @@
                   <span class="text-xs text-slate-400">Hardware Project</span>
                 </div>
                 <h3
-                  class="font-display font-bold text-navy text-base mb-2"
-                  style="font-weight: 700"
+                  class="font-bold text-navy text-base mb-2"
+                  style="font-family: 'Syne', sans-serif; font-weight: 700"
                 >
                   Autonomous IoT Robot Car
                 </h3>
@@ -865,15 +1209,15 @@
                 </p>
                 <div class="flex flex-wrap gap-1.5 mt-4">
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Arduino</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >ESP32</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >C++</span
                   >
                 </div>
@@ -884,7 +1228,7 @@
           <!-- IoT Smart System -->
           <div class="reveal">
             <div
-              class="h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
+              class="project-card h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
             >
               <div class="h-52 overflow-hidden img-placeholder">
                 <img
@@ -892,6 +1236,11 @@
                   alt="IoT Smart System"
                   class="w-full h-full object-cover"
                   style="object-fit: cover"
+                  onerror="
+                    this.style.display = 'none';
+                    this.parentElement.innerHTML =
+                      '<div style=\'display:flex;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#F0FDF4,#DCFCE7)\'><i class=\'ri-cpu-line\' style=\'font-size:3rem;color:#86EFAC;\'></i><span style=\'color:#4ADE80;font-size:0.75rem;\'>IoT Smart System</span></div>';
+                  "
                 />
               </div>
               <div class="p-6 flex flex-col flex-1">
@@ -904,26 +1253,27 @@
                   <span class="text-xs text-slate-400">Embedded Systems</span>
                 </div>
                 <h3
-                  class="font-display font-bold text-navy text-base mb-2"
-                  style="font-weight: 700"
+                  class="font-bold text-navy text-base mb-2"
+                  style="font-family: 'Syne', sans-serif; font-weight: 700"
                 >
                   Smart IoT Control System
                 </h3>
                 <p class="text-slate-500 text-sm leading-relaxed flex-1">
                   Wireless sensor-based smart system with real-time data logging
-                  and remote monitoring capabilities using Bluetooth & Wi-Fi.
+                  and remote monitoring capabilities using Bluetooth &amp;
+                  Wi-Fi.
                 </p>
                 <div class="flex flex-wrap gap-1.5 mt-4">
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Raspberry Pi</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Python</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >MQTT</span
                   >
                 </div>
@@ -931,12 +1281,12 @@
             </div>
           </div>
 
-          <!-- Kotlin App -->
+          <!-- App Dev -->
           <div class="reveal">
             <div
-              class="h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
+              class="project-card h-full rounded-3xl overflow-hidden border border-slate-200 card-hover bg-white shadow-sm flex flex-col"
             >
-              <div class="h-52 img-placeholder">
+              <div class="h-52 icon-card-purple img-placeholder">
                 <div
                   style="
                     width: 100%;
@@ -968,8 +1318,8 @@
                   <span class="text-xs text-slate-400">Mobile</span>
                 </div>
                 <h3
-                  class="font-display font-bold text-navy text-base mb-2"
-                  style="font-weight: 700"
+                  class="font-bold text-navy text-base mb-2"
+                  style="font-family: 'Syne', sans-serif; font-weight: 700"
                 >
                   Android App Development
                 </h3>
@@ -979,15 +1329,15 @@
                 </p>
                 <div class="flex flex-wrap gap-1.5 mt-4">
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Kotlin</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Android</span
                   >
                   <span
-                    class="text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
+                    class="tag-chip text-xs px-2 py-1 rounded-md bg-slate-100 text-slate-600"
                     >Bluetooth</span
                   >
                 </div>
@@ -995,202 +1345,213 @@
             </div>
           </div>
         </div>
-
         <div class="text-center mt-12 reveal">
           <p class="text-slate-400 text-sm">
-            More projects coming soon · Currently building something cool
+            More projects coming soon · Currently building something cool 🚀
           </p>
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════ SKILLS ══════════════════════════════ -->
-    <section id="skills" class="py-24 bg-white">
+    <section id="skills" class="section-white py-24 bg-white">
       <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-16 reveal">
           <span
-            class="text-accent font-medium text-sm uppercase tracking-widest"
+            class="font-medium text-sm uppercase tracking-widest"
+            style="color: #2563eb"
             >What I Know</span
           >
           <div class="section-divider mx-auto"></div>
           <h2
-            class="text-3xl md:text-4xl font-display font-bold text-navy"
-            style="font-weight: 800"
+            class="text-3xl md:text-4xl font-bold text-navy"
+            style="font-family: 'Syne', sans-serif; font-weight: 800"
           >
-            Skills & Expertise
+            Skills &amp; Expertise
           </h2>
           <p class="text-slate-500 mt-3 max-w-xl mx-auto">
             A blend of programming, tools, and domain knowledge.
           </p>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Programming -->
           <div
-            class="reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
+            class="skill-card reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
           >
             <div class="flex items-center gap-3 mb-6">
               <div
-                class="w-11 h-11 rounded-2xl flex items-center justify-center"
+                class="badge-icon-blue w-11 h-11 rounded-2xl flex items-center justify-center"
                 style="background: #eff6ff"
               >
-                <i class="ri-code-s-slash-line text-accent text-lg"></i>
+                <i
+                  class="ri-code-s-slash-line text-lg"
+                  style="color: #2563eb"
+                ></i>
               </div>
               <h3
-                class="font-display font-bold text-navy text-lg"
-                style="font-weight: 700"
+                class="font-bold text-navy text-lg"
+                style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 Programming Languages
               </h3>
             </div>
             <div class="flex flex-wrap gap-2.5">
               <span class="skill-tag"
-                ><i class="ri-terminal-line text-accent"></i> Python</span
+                ><i class="ri-terminal-line" style="color: #2563eb"></i>
+                Python</span
               >
               <span class="skill-tag"
-                ><i class="ri-code-line text-blue-500"></i> C++</span
+                ><i class="ri-code-line" style="color: #3b82f6"></i> C++</span
               >
               <span class="skill-tag"
-                ><i class="ri-smartphone-line text-purple-500"></i> Kotlin</span
+                ><i class="ri-smartphone-line" style="color: #a855f7"></i>
+                Kotlin</span
               >
               <span class="skill-tag"
-                ><i class="ri-file-code-line text-green-500"></i> HTML /
+                ><i class="ri-file-code-line" style="color: #22c55e"></i> HTML /
                 CSS</span
               >
               <span class="skill-tag"
-                ><i class="ri-javascript-line text-yellow-500"></i>
+                ><i class="ri-javascript-line" style="color: #eab308"></i>
                 JavaScript</span
               >
             </div>
           </div>
-
-          <!-- Tools -->
           <div
-            class="reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
+            class="skill-card reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
           >
             <div class="flex items-center gap-3 mb-6">
               <div
-                class="w-11 h-11 rounded-2xl flex items-center justify-center"
+                class="badge-icon-yellow w-11 h-11 rounded-2xl flex items-center justify-center"
                 style="background: #fef3c7"
               >
-                <i class="ri-tools-line text-amber-500 text-lg"></i>
+                <i class="ri-tools-line text-lg" style="color: #f59e0b"></i>
               </div>
               <h3
-                class="font-display font-bold text-navy text-lg"
-                style="font-weight: 700"
+                class="font-bold text-navy text-lg"
+                style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
-                Tools & Software
+                Tools &amp; Software
               </h3>
             </div>
             <div class="flex flex-wrap gap-2.5">
               <span class="skill-tag"
-                ><i class="ri-blender-line text-orange-500"></i> Blender</span
+                ><i class="ri-blender-line" style="color: #f97316"></i>
+                Blender</span
               >
               <span class="skill-tag"
-                ><i class="ri-github-line text-gray-700"></i> Git / GitHub</span
+                ><i class="ri-github-line" style="color: #374151"></i> Git /
+                GitHub</span
               >
               <span class="skill-tag"
-                ><i class="ri-terminal-box-line text-green-600"></i> Linux</span
+                ><i class="ri-terminal-box-line" style="color: #16a34a"></i>
+                Linux</span
               >
               <span class="skill-tag"
-                ><i class="ri-code-box-line text-blue-500"></i> VS Code</span
+                ><i class="ri-code-box-line" style="color: #3b82f6"></i> VS
+                Code</span
               >
               <span class="skill-tag"
-                ><i class="ri-search-eye-line text-blue-700"></i> Autopsy</span
+                ><i class="ri-search-eye-line" style="color: #1d4ed8"></i>
+                Autopsy</span
               >
               <span class="skill-tag"
-                ><i class="ri-wave-line text-cyan-500"></i> Wireshark</span
+                ><i class="ri-wave-line" style="color: #06b6d4"></i>
+                Wireshark</span
               >
               <span class="skill-tag"
-                ><i class="ri-table-line text-green-700"></i> Excel</span
+                ><i class="ri-table-line" style="color: #15803d"></i>
+                Excel</span
               >
               <span class="skill-tag"
-                ><i class="ri-function-line text-blue-600"></i> NumPy</span
+                ><i class="ri-function-line" style="color: #2563eb"></i>
+                NumPy</span
               >
             </div>
           </div>
-
-          <!-- IoT & Hardware -->
           <div
-            class="reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
+            class="skill-card reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
           >
             <div class="flex items-center gap-3 mb-6">
               <div
                 class="w-11 h-11 rounded-2xl flex items-center justify-center"
                 style="background: #f0fdf4"
               >
-                <i class="ri-cpu-line text-green-600 text-lg"></i>
+                <i class="ri-cpu-line text-lg" style="color: #16a34a"></i>
               </div>
               <h3
-                class="font-display font-bold text-navy text-lg"
-                style="font-weight: 700"
+                class="font-bold text-navy text-lg"
+                style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
-                IoT & Hardware
+                IoT &amp; Hardware
               </h3>
             </div>
             <div class="flex flex-wrap gap-2.5">
               <span class="skill-tag"
-                ><i class="ri-cpu-line text-teal-500"></i> Arduino</span
+                ><i class="ri-cpu-line" style="color: #14b8a6"></i>
+                Arduino</span
               >
               <span class="skill-tag"
-                ><i class="ri-rss-line text-red-500"></i> ESP32 / ESP8266</span
+                ><i class="ri-rss-line" style="color: #ef4444"></i> ESP32 /
+                ESP8266</span
               >
               <span class="skill-tag"
-                ><i class="ri-signal-wifi-line text-blue-400"></i> MQTT /
-                Bluetooth</span
+                ><i class="ri-signal-wifi-line" style="color: #60a5fa"></i> MQTT
+                / Bluetooth</span
               >
               <span class="skill-tag"
-                ><i class="ri-sensor-line text-green-500"></i> Sensor
+                ><i class="ri-sensor-line" style="color: #22c55e"></i> Sensor
                 Integration</span
               >
               <span class="skill-tag"
-                ><i class="ri-robot-2-line text-purple-500"></i> Robotics</span
+                ><i class="ri-robot-2-line" style="color: #a855f7"></i>
+                Robotics</span
               >
               <span class="skill-tag"
-                ><i class="ri-pie-chart-2-line text-yellow-500"></i> Smart
-                Textiles</span
+                ><i class="ri-pie-chart-2-line" style="color: #eab308"></i>
+                Smart Textiles</span
               >
             </div>
           </div>
-
-          <!-- Cyber Security -->
           <div
-            class="reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
+            class="skill-card reveal rounded-3xl p-8 border border-slate-200 card-hover bg-white"
           >
             <div class="flex items-center gap-3 mb-6">
               <div
                 class="w-11 h-11 rounded-2xl flex items-center justify-center"
                 style="background: #fdf4ff"
               >
-                <i class="ri-shield-keyhole-line text-purple-500 text-lg"></i>
+                <i
+                  class="ri-shield-keyhole-line text-lg"
+                  style="color: #a855f7"
+                ></i>
               </div>
               <h3
-                class="font-display font-bold text-navy text-lg"
-                style="font-weight: 700"
+                class="font-bold text-navy text-lg"
+                style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 Cyber Security
               </h3>
             </div>
             <div class="flex flex-wrap gap-2.5">
               <span class="skill-tag"
-                ><i class="ri-shield-check-line text-green-500"></i> Network
-                Security</span
+                ><i class="ri-shield-check-line" style="color: #22c55e"></i>
+                Network Security</span
               >
               <span class="skill-tag"
-                ><i class="ri-search-2-line text-blue-500"></i> Digital
+                ><i class="ri-search-2-line" style="color: #3b82f6"></i> Digital
                 Forensics</span
               >
               <span class="skill-tag"
-                ><i class="ri-lock-password-line text-red-500"></i> Ethical
-                Hacking</span
+                ><i class="ri-lock-password-line" style="color: #ef4444"></i>
+                Ethical Hacking</span
               >
               <span class="skill-tag"
-                ><i class="ri-eye-line text-purple-500"></i> Wireshark
+                ><i class="ri-eye-line" style="color: #a855f7"></i> Wireshark
                 Analysis</span
               >
               <span class="skill-tag"
-                ><i class="ri-hard-drive-2-line text-gray-600"></i> Autopsy
-                Forensics</span
+                ><i class="ri-hard-drive-2-line" style="color: #4b5563"></i>
+                Autopsy Forensics</span
               >
             </div>
           </div>
@@ -1200,7 +1561,7 @@
 
     <!-- ══════════════════════════════ CTA BANNER ══════════════════════════════ -->
     <section
-      class="py-16 reveal"
+      class="cta-banner py-16 reveal"
       style="background: linear-gradient(135deg, #0b1437 0%, #1e3a8a 100%)"
     >
       <div class="max-w-3xl mx-auto px-6 text-center">
@@ -1211,8 +1572,8 @@
           <i class="ri-rocket-2-line text-white text-2xl"></i>
         </div>
         <h2
-          class="text-2xl md:text-3xl font-display font-bold text-white mb-3"
-          style="font-weight: 800"
+          class="text-2xl md:text-3xl font-bold text-white mb-3"
+          style="font-family: 'Syne', sans-serif; font-weight: 800"
         >
           Want to Work Together?
         </h2>
@@ -1224,23 +1585,24 @@
           href="#contact"
           class="inline-flex items-center gap-2 bg-white text-navy font-semibold px-7 py-3.5 rounded-full hover:bg-blue-50 transition-all shadow-lg"
         >
-          <i class="ri-mail-send-line text-accent"></i> Let's Talk
+          <i class="ri-mail-send-line" style="color: #2563eb"></i> Let's Talk
         </a>
       </div>
     </section>
 
     <!-- ══════════════════════════════ CONTACT ══════════════════════════════ -->
-    <section id="contact" class="py-24 bg-white">
+    <section id="contact" class="section-white py-24 bg-white">
       <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-16 reveal">
           <span
-            class="text-accent font-medium text-sm uppercase tracking-widest"
+            class="font-medium text-sm uppercase tracking-widest"
+            style="color: #2563eb"
             >Get In Touch</span
           >
           <div class="section-divider mx-auto"></div>
           <h2
-            class="text-3xl md:text-4xl font-display font-bold text-navy"
-            style="font-weight: 800"
+            class="text-3xl md:text-4xl font-bold text-navy"
+            style="font-family: 'Syne', sans-serif; font-weight: 800"
           >
             Contact Me
           </h2>
@@ -1248,22 +1610,23 @@
             Have a question or want to collaborate? I'd love to hear from you!
           </p>
         </div>
-
         <div class="flex flex-col md:flex-row gap-10">
-          <!-- Info -->
           <div class="w-full md:w-2/5 reveal">
             <div class="space-y-5 mb-8">
               <a
                 href="mailto:dhakebhushan5@gmail.com"
-                class="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 hover:border-accent transition-all card-hover group no-underline"
+                class="contact-card flex items-center gap-4 p-4 rounded-2xl border border-slate-200 hover:border-accent transition-all card-hover group no-underline"
+                style="
+                  transition:
+                    border-color 0.3s,
+                    background 0.3s;
+                "
               >
                 <div
-                  class="w-11 h-11 rounded-xl flex items-center justify-center group-hover:bg-accent transition-colors"
+                  class="badge-icon-blue w-11 h-11 rounded-xl flex items-center justify-center"
                   style="background: #eff6ff"
                 >
-                  <i
-                    class="ri-mail-line text-accent group-hover:text-white transition-colors"
-                  ></i>
+                  <i class="ri-mail-line" style="color: #2563eb"></i>
                 </div>
                 <div>
                   <p class="text-xs text-slate-400 uppercase tracking-wider">
@@ -1276,15 +1639,18 @@
               </a>
               <a
                 href="tel:+918821859953"
-                class="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 hover:border-accent transition-all card-hover group no-underline"
+                class="contact-card flex items-center gap-4 p-4 rounded-2xl border border-slate-200 hover:border-accent transition-all card-hover group no-underline"
+                style="
+                  transition:
+                    border-color 0.3s,
+                    background 0.3s;
+                "
               >
                 <div
-                  class="w-11 h-11 rounded-xl flex items-center justify-center group-hover:bg-accent transition-colors"
+                  class="badge-icon-blue w-11 h-11 rounded-xl flex items-center justify-center"
                   style="background: #eff6ff"
                 >
-                  <i
-                    class="ri-phone-line text-accent group-hover:text-white transition-colors"
-                  ></i>
+                  <i class="ri-phone-line" style="color: #2563eb"></i>
                 </div>
                 <div>
                   <p class="text-xs text-slate-400 uppercase tracking-wider">
@@ -1294,13 +1660,18 @@
                 </div>
               </a>
               <div
-                class="flex items-center gap-4 p-4 rounded-2xl border border-slate-200"
+                class="contact-card flex items-center gap-4 p-4 rounded-2xl border border-slate-200"
+                style="
+                  transition:
+                    background 0.3s,
+                    border-color 0.3s;
+                "
               >
                 <div
-                  class="w-11 h-11 rounded-xl flex items-center justify-center"
+                  class="badge-icon-blue w-11 h-11 rounded-xl flex items-center justify-center"
                   style="background: #eff6ff"
                 >
-                  <i class="ri-map-pin-line text-accent"></i>
+                  <i class="ri-map-pin-line" style="color: #2563eb"></i>
                 </div>
                 <div>
                   <p class="text-xs text-slate-400 uppercase tracking-wider">
@@ -1312,39 +1683,40 @@
                 </div>
               </div>
             </div>
-            <div>
-              <p class="text-sm font-semibold text-navy mb-3">
-                Connect with me
-              </p>
-              <div class="flex gap-3">
-                <a
-                  href="https://github.com/Bhushandhake"
-                  target="_blank"
-                  class="social-btn"
-                  ><i class="ri-github-fill"></i
-                ></a>
-                <a
-                  href="https://www.linkedin.com/in/bhushan-dhake-a104ab274"
-                  target="_blank"
-                  class="social-btn"
-                  ><i class="ri-linkedin-fill"></i
-                ></a>
-                <a
-                  href="https://www.instagram.com/bh.ushan8378"
-                  target="_blank"
-                  class="social-btn"
-                  ><i class="ri-instagram-fill"></i
-                ></a>
-              </div>
+            <p class="text-sm font-semibold text-navy mb-3">Connect with me</p>
+            <div class="flex gap-3">
+              <a
+                href="https://github.com/Bhushandhake"
+                target="_blank"
+                class="social-btn"
+                ><i class="ri-github-fill"></i
+              ></a>
+              <a
+                href="https://www.linkedin.com/in/bhushan-dhake-a104ab274"
+                target="_blank"
+                class="social-btn"
+                ><i class="ri-linkedin-fill"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/bh.ushan8378"
+                target="_blank"
+                class="social-btn"
+                ><i class="ri-instagram-fill"></i
+              ></a>
             </div>
           </div>
-
-          <!-- Form -->
           <div class="w-full md:w-3/5 reveal">
-            <div class="rounded-3xl border border-slate-200 p-8 shadow-sm">
+            <div
+              class="contact-form-box rounded-3xl border border-slate-200 p-8 shadow-sm"
+              style="
+                transition:
+                  background 0.3s,
+                  border-color 0.3s;
+              "
+            >
               <h3
-                class="font-display font-bold text-navy text-xl mb-6"
-                style="font-weight: 700"
+                class="font-bold text-navy text-xl mb-6"
+                style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 Send a Message
               </h3>
@@ -1407,7 +1779,7 @@
                 </button>
                 <p
                   id="form-msg"
-                  class="text-center text-sm text-green-600 mt-3 hidden"
+                  class="text-center text-sm text-green-500 mt-3 hidden"
                 >
                   ✓ Message sent! I'll get back to you soon.
                 </p>
@@ -1426,8 +1798,8 @@
         >
           <div class="mb-6 md:mb-0">
             <p
-              class="font-display font-bold text-white text-2xl mb-1"
-              style="font-weight: 800"
+              class="font-bold text-white text-2xl mb-1"
+              style="font-family: 'Syne', sans-serif; font-weight: 800"
             >
               Bhushan Dhake<span class="gradient-text">.</span>
             </p>
@@ -1489,50 +1861,65 @@
     </footer>
 
     <!-- Back to top -->
-    <a href="#home" id="back-top" title="Back to top">
-      <i class="ri-arrow-up-line"></i>
-    </a>
+    <a href="#home" id="back-top" title="Back to top"
+      ><i class="ri-arrow-up-line"></i
+    ></a>
 
     <script>
-      // // ── TYPING EFFECT
-      // const phrases = [
-      //   'Cyber Security Student 🛡️',
-      //   'IoT Innovator & Builder 🤖',
-      //   'Python / C++ Developer 💻',
-      //   '3D Artist in Blender 🎨',
-      //   'Patent Holder & Inventor 🏆',
-      // ];
-      // let pIdx = 0,
-      //   cIdx = 0,
-      //   deleting = false;
-      // const typedEl = document.getElementById('typed-text');
-      // function typeLoop() {
-      //   const current = phrases[pIdx];
-      //   if (!deleting) {
-      //     typedEl.textContent = current.slice(0, ++cIdx);
-      //     if (cIdx === current.length) {
-      //       deleting = true;
-      //       setTimeout(typeLoop, 2000);
-      //       return;
-      //     }
-      //   } else {
-      //     typedEl.textContent = current.slice(0, --cIdx);
-      //     if (cIdx === 0) {
-      //       deleting = false;
-      //       pIdx = (pIdx + 1) % phrases.length;
-      //     }
-      //   }
-      //   setTimeout(typeLoop, deleting ? 50 : 80);
-      // }
-      // typeLoop();
+      // ── DARK MODE
+      const html = document.documentElement;
+      const themeIcons = [
+        document.getElementById('theme-icon'),
+        document.getElementById('theme-icon-mob'),
+      ];
+      const toggleBtns = [
+        document.getElementById('theme-toggle'),
+        document.getElementById('theme-toggle-mob'),
+      ];
+
+      function applyTheme(dark) {
+        if (dark) {
+          html.classList.remove('light');
+          html.classList.add('dark');
+          themeIcons.forEach((i) => {
+            if (i) {
+              i.className = 'ri-sun-line';
+            }
+          });
+          localStorage.setItem('theme', 'dark');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+          themeIcons.forEach((i) => {
+            if (i) {
+              i.className = 'ri-moon-line';
+            }
+          });
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Load saved preference
+      const saved = localStorage.getItem('theme');
+      if (
+        saved === 'dark' ||
+        (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        applyTheme(true);
+      }
+
+      toggleBtns.forEach((btn) => {
+        if (btn)
+          btn.addEventListener('click', () =>
+            applyTheme(!html.classList.contains('dark')),
+          );
+      });
 
       // ── SCROLL REVEAL
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('visible');
-            }
+            if (e.isIntersecting) e.target.classList.add('visible');
           });
         },
         { threshold: 0.1 },
@@ -1543,20 +1930,23 @@
 
       // ── BACK TO TOP
       const backTop = document.getElementById('back-top');
-      window.addEventListener('scroll', () => {
-        backTop.classList.toggle('show', window.scrollY > 400);
-      });
+      window.addEventListener('scroll', () =>
+        backTop.classList.toggle('show', window.scrollY > 400),
+      );
 
       // ── MOBILE MENU
-      const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMenuBtn = document.getElementById('close-menu');
-      menuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
-      closeMenuBtn.addEventListener('click', () =>
-        mobileMenu.classList.remove('open'),
-      );
+      document
+        .getElementById('menu-btn')
+        .addEventListener('click', () =>
+          document.getElementById('mobile-menu').classList.add('open'),
+        );
+      document
+        .getElementById('close-menu')
+        .addEventListener('click', () =>
+          document.getElementById('mobile-menu').classList.remove('open'),
+        );
       function closeMobileMenu() {
-        mobileMenu.classList.remove('open');
+        document.getElementById('mobile-menu').classList.remove('open');
       }
 
       // ── CONTACT FORM
@@ -1588,14 +1978,10 @@
         });
       });
 
-      // ── HEADER SCROLL EFFECT
+      // ── HEADER SHADOW ON SCROLL
       window.addEventListener('scroll', () => {
-        const header = document.getElementById('header');
-        if (window.scrollY > 50) {
-          header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.08)';
-        } else {
-          header.style.boxShadow = 'none';
-        }
+        document.getElementById('header').style.boxShadow =
+          window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,0.08)' : 'none';
       });
     </script>
   </body>
